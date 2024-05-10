@@ -1,4 +1,5 @@
 const EmailSend = require("../utility/EmailHelper");
+const MobileSend=require('../utility/SMSHelper')
 const UserModel=require("../models/UserModel")
 const ProfileModel=require("../models/ProfileModel")
 
@@ -7,18 +8,20 @@ const {EncodeToken} = require("../utility/TokenHelper");
 const UserOTPService = async (req) => {
      try {
          let email=req.params.email;
+         let mobile=req.params.mobile;
          let code=Math.floor(100000+Math.random()*900000);
 
          let EmailText=`Your Verification Code is= ${code}`
          let EmailSubject='Email Verification'
 
+         await MobileSend(mobile,EmailText,EmailSubject);
          await EmailSend(email,EmailText,EmailSubject);
 
          await UserModel.updateOne({email:email},{$set:{otp:code}},{upsert:true})
 
          return {status:"success", message:"6 Digit OTP has been send"}
      }catch (e) {
-         return {status:"fail", message:e}
+         return {status:"fail", message:e.toString()}
      }
 }
 

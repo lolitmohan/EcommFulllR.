@@ -18,7 +18,7 @@ const path = require("path");
 
 
 
-let URI="mongodb+srv://test1111:test1111@cluster0.nsiopuc.mongodb.net/EcomRabbil";
+let URI="mongodb+srv://test1111:test1111@cluster0.nsiopuc.mongodb.net/Inventori";
 let OPTION={user:'test1111',pass:'test1111',autoIndex:true}
 // let URL="mongodb://localhost:27017/ecom4"
 // let option={user:'',pass:"",autoIndex:true};

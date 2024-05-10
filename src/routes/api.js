@@ -12,6 +12,7 @@ const AuthVerification=require('../middlewares/AuthVerification')
 const router=express.Router();
 
 // Product
+router.get('/ProductList',ProductController.ProductList)
 router.get('/ProductBrandList',ProductController.ProductBrandList)
 router.get('/ProductCategoryList',ProductController.ProductCategoryList)
 router.get('/ProductSliderList',ProductController.ProductSliderList)
@@ -27,7 +28,7 @@ router.post('/ProductListByFilter',ProductController.ProductListByFilter);
 
 
 // User
-router.get('/UserOTP/:email',UserController.UserOTP)
+router.get('/UserOTP/:email/:mobile',UserController.UserOTP)
 router.get('/VerifyLogin/:email/:otp',UserController.VerifyLogin)
 router.get('/UserLogout',AuthVerification,UserController.UserLogout)
 router.post('/CreateProfile',AuthVerification,UserController.CreateProfile)

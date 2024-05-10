@@ -9,6 +9,16 @@ const mongoose =require('mongoose');
 const ObjectId=mongoose.Types.ObjectId;
 
 
+const ProductListService = async () => {
+    try {
+       let data= await ProductModel.find()
+       return {status:"success",data:data}
+    }
+    catch (e) {
+        return {status:"fail",data:e}.toString()
+    }
+}
+
 const BrandListService = async () => {
         try {
            let data= await BrandModel.find();
@@ -284,11 +294,8 @@ const ListByFilterService = async (req) => {
         if (!isNaN(priceMax)) {
             PriceMatchConditions['numericPrice'] = { ...(PriceMatchConditions['numericPrice'] || {}), $lte: priceMax };
         }
+
         let PriceMatchStage = { $match: PriceMatchConditions };
-
-
-
-
 
 
         let JoinWithBrandStage= {$lookup:{from:"brands",localField:"brandID",foreignField:"_id",as:"brand"}};
@@ -313,6 +320,7 @@ const ListByFilterService = async (req) => {
 
 
 module.exports={
+    ProductListService,
     ListByFilterService,
     CreateReviewService,
     BrandListService,
