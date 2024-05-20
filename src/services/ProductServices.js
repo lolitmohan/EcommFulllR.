@@ -5,17 +5,29 @@ const ProductModel=require('../models/ProductModel')
 const ProductDetailModel=require('../models/ProductDetailModel')
 const ReviewModel=require('../models/ReviewModel')
 const mongoose =require('mongoose');
+const FeaturesModel = require('../models/FeaturesModel')
 
 const ObjectId=mongoose.Types.ObjectId;
 
 
 const ProductListService = async () => {
     try {
+
        let data= await ProductModel.find()
        return {status:"success",data:data}
     }
     catch (e) {
         return {status:"fail",data:e}.toString()
+    }
+}
+
+const ProductFetucherService=async()=>{
+    try{
+        let data=await FeaturesModel.find();
+        return {status:'success',data:data}
+    }
+    catch(e){
+        return {status:'fail',data:e}
     }
 }
 
@@ -38,6 +50,7 @@ const CategoryListService = async () => {
         return {status:"fail",data:e}.toString()
     }
 }
+
 
 const SliderListService = async () => {
     try {
@@ -68,7 +81,7 @@ const ListByBrandService = async (req) => {
         let ProjectionStage={$project:{'brand._id':0,'category._id':0,'categoryID':0,'brandID':0}}
 
 
-        // Query
+        
         let data= await  ProductModel.aggregate([
             MatchStage,
             JoinWithBrandStage,
@@ -111,8 +124,9 @@ const ListByCategoryService = async (req) => {
 const ListByRemarkService = async (req) => {
     try {
 
-        let Remark=req.params.Remark;
-        let MatchStage={$match:{remark:Remark}}
+        let remark=req.params.remark;
+
+        let MatchStage={$match:{remark:remark}}
 
         let JoinWithBrandStage= {$lookup:{from:"brands",localField:"brandID",foreignField:"_id",as:"brand"}};
         let JoinWithCategoryStage={$lookup:{from:"categories",localField:"categoryID",foreignField:"_id",as:"category"}};
@@ -121,8 +135,7 @@ const ListByRemarkService = async (req) => {
         let ProjectionStage={$project:{'brand._id':0,'category._id':0,'categoryID':0,'brandID':0}}
 
         let data= await  ProductModel.aggregate([
-            MatchStage, JoinWithBrandStage,JoinWithCategoryStage,
-            UnwindBrandStage,UnwindCategoryStage, ProjectionStage
+            MatchStage,JoinWithBrandStage,JoinWithCategoryStage,UnwindBrandStage,UnwindCategoryStage
         ])
         return {status:"success",data:data}
 
@@ -136,7 +149,7 @@ const ListBySmilierService = async (req) => {
     try {
         let CategoryID=new ObjectId(req.params.CategoryID);
         let MatchStage={$match:{categoryID:CategoryID}}
-        let limitStage={$limit:20}
+        let limitStage={$limit:3}
 
         let JoinWithBrandStage= {$lookup:{from:"brands",localField:"brandID",foreignField:"_id",as:"brand"}};
         let JoinWithCategoryStage={$lookup:{from:"categories",localField:"categoryID",foreignField:"_id",as:"category"}};
@@ -264,6 +277,35 @@ const CreateReviewService = async (req) => {
     }
 }
 
+const CreateCategoryService = async (req) => {
+    try{
+        let reqBody=req.body;
+        let data=await CategoryModel.create({
+            categoryName:reqBody['categoryName'],
+            categoryImg:reqBody['categoryImg'],
+         })
+        return {status:"success",data:data}
+    }
+    catch (e) {
+        return {status:"fail",data:e.toString()}
+    }
+}
+
+
+const CreateBrandService = async (req) => {
+    try{
+        let reqBody=req.body;
+        let data=await BrandModel.create({
+            brandName:reqBody['brandName'],
+            brandImg:reqBody['brandImg'],
+         })
+        return {status:"success",data:data}
+    }
+    catch (e) {
+        return {status:"fail",data:e.toString()}
+    }
+}
+
 
 const ListByFilterService = async (req) => {
     try {
@@ -320,6 +362,8 @@ const ListByFilterService = async (req) => {
 
 
 module.exports={
+    CreateCategoryService,
+    CreateBrandService,
     ProductListService,
     ListByFilterService,
     CreateReviewService,
@@ -332,5 +376,6 @@ module.exports={
     ListBySmilierService,
     ListByKeywordService,
     DetailsService,
-    ReviewListService
+    ReviewListService,
+    ProductFetucherService
 }

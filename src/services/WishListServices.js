@@ -11,8 +11,8 @@ const WishListService = async (req) => {
       let JoinStageProduct={$lookup:{from:"products",localField:"productID",foreignField:"_id",as:"product"}}
       let unwindProductStage={$unwind:"$product"}
 
-      let JoinStageBrand={$lookup:{from:"brands",localField:"product.brandID",foreignField:"_id",as:"brand"}}
-      let unwindBrandStage={$unwind:"$brand"}
+    //   let JoinStageBrand={$lookup:{from:"brands",localField:"product.brandID",foreignField:"_id",as:"brand"}}
+    //   let unwindBrandStage={$unwind:"$brand"}
 
 
       let JoinStageCategory={$lookup:{from:"categories",localField:"product.categoryID",foreignField:"_id",as:"category"}}
@@ -34,8 +34,8 @@ const WishListService = async (req) => {
           matchStage,
           JoinStageProduct,
           unwindProductStage,
-          JoinStageBrand,
-          unwindBrandStage,
+        //   JoinStageBrand,
+        //   unwindBrandStage,
           JoinStageCategory,
           unwindCategoryStage,
           projectionStage
@@ -47,11 +47,6 @@ const WishListService = async (req) => {
       return {status:"fail",message:"Something Went Wrong !"}
   }
 }
-
-
-
-
-
 
 
 
@@ -81,7 +76,6 @@ const RemoveWishListService = async (req) => {
         return {status:"fail",message:"Something Went Wrong !"}
     }
 }
-
 
 module.exports={
     WishListService,

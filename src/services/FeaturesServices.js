@@ -2,12 +2,12 @@ const FeaturesModel = require("../models/FeaturesModel");
 const LegalModel = require("../models/LegalModel");
 
 const FeaturesListService = async () => {
-    try {
-        let data= await FeaturesModel.find();
-        return {status:"success",data:data}
+    try{
+        let data=await FeaturesModel.find();
+        return {status:"Success", data:data}
     }
-    catch (e) {
-        return {status:"fail",data:e}.toString()
+    catch(e){
+        return {status:"fail", message:"Something Went Wrong"}
     }
 }
 

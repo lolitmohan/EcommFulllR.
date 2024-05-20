@@ -11,16 +11,21 @@ const AuthVerification=require('../middlewares/AuthVerification')
 
 const router=express.Router();
 
+//Brand & Category Creating
+router.post('/CreateCategory',ProductController.CreateCategory)
+router.post('/CreateBrand',ProductController.CreateBrand)
+
 // Product
 router.get('/ProductList',ProductController.ProductList)
 router.get('/ProductBrandList',ProductController.ProductBrandList)
+router.get('/ProductFeturceList',ProductController.ProductFeturceList)
 router.get('/ProductCategoryList',ProductController.ProductCategoryList)
 router.get('/ProductSliderList',ProductController.ProductSliderList)
 router.get('/ProductListByBrand/:BrandID',ProductController.ProductListByBrand)
 router.get('/ProductListByCategory/:CategoryID',ProductController.ProductListByCategory)
 router.get('/ProductListBySmilier/:CategoryID',ProductController.ProductListBySmilier)
 router.get('/ProductListByKeyword/:Keyword',ProductController.ProductListByKeyword)
-router.get('/ProductListByRemark/:Remark',ProductController.ProductListByRemark)
+router.get('/ProductListByRemark/:remark',ProductController.ProductListByRemark)
 router.get('/ProductDetails/:ProductID',ProductController.ProductDetails)
 router.get('/ProductReviewList/:ProductID',ProductController.ProductReviewList)
 
@@ -45,23 +50,13 @@ router.get('/WishList',AuthVerification,WishListController.WishList)
 
 
 // Cart
-router.post('/SaveCartList',AuthVerification,CartListController.SaveCartList)
+router.post('/CreateCartList',AuthVerification,CartListController.CreateCartList)
 router.post('/UpdateCartList/:cartID',AuthVerification,CartListController.UpdateCartList)
 router.post('/RemoveCartList',AuthVerification,CartListController.RemoveCartList)
 router.get('/CartList',AuthVerification,CartListController.CartList)
 
 // Invoice & Payment
 router.get('/CreateInvoice',AuthVerification,InvoiceController.CreateInvoice)
-
-
-
-
-
-
-
-
-
-
 router.get('/InvoiceList',AuthVerification,InvoiceController.InvoiceList)
 router.get('/InvoiceProductList/:invoice_id',AuthVerification,InvoiceController.InvoiceProductList)
 
@@ -78,6 +73,7 @@ router.get('/LegalDetails/:type',FeaturesController.LegalDetails)
 
 // Create Review
 router.post('/CreateReview',AuthVerification,ProductController.CreateReview)
+router.get('/ProductReviewList/:ProductID',AuthVerification,ProductController.ProductReviewList)
 
 
 module.exports=router;

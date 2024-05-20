@@ -31,8 +31,6 @@ exports.PaymentIPN=async (req, res) => {
     return res.status(200).json(result)
 }
 
-
-
 exports.InvoiceList=async (req, res) => {
     let result=await InvoiceListService(req);
     return res.status(200).json(result)

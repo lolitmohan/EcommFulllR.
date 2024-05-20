@@ -1,11 +1,29 @@
-const {ListByFilterService,CreateReviewService,BrandListService,CategoryListService,SliderListService,ListByCategoryService,ListByBrandService,ListByRemarkService,ListBySmilierService,ListByKeywordService,DetailsService,ReviewListService, ProductListService}=require('../services/ProductServices')
+const {ListByFilterService,CreateReviewService,BrandListService,CategoryListService,SliderListService,ListByCategoryService,ListByBrandService,ListByRemarkService,ListBySmilierService,ListByKeywordService,DetailsService,ReviewListService, ProductListService, ProductFetucherService, CreateCategoryService, CreateBrandService}=require('../services/ProductServices')
+
+
+
+exports.CreateCategory=async(req,res)=>{
+    let result=await CreateCategoryService(req)
+    return res.status(200).json(result);
+}
+
+exports.CreateBrand=async(req,res)=>{
+    let result=await CreateBrandService(req)
+    return res.status(200).json(result);
+}
 
 exports.ProductList=async(req,res)=>{
     let result=await ProductListService()
     return res.status(200).json(result)
 }
+
 exports.ProductBrandList=async(req,res)=>{
     let result=await BrandListService();
+    return res.status(200).json(result)
+}
+
+exports.ProductFeturceList=async(req,res)=>{
+    let result=await ProductFetucherService();
     return res.status(200).json(result)
 }
 

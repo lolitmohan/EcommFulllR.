@@ -6,7 +6,7 @@ exports.CartList=async(req,res)=>{
     return res.status(200).json(result)
 }
 
-exports.SaveCartList=async(req,res)=>{
+exports.CreateCartList=async(req,res)=>{
     let result=await SaveCartListService(req);
     return res.status(200).json(result)
 }

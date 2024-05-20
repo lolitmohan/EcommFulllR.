@@ -16,7 +16,7 @@ const CreateInvoiceService = async (req) => {
     let cus_email=req.headers.email;
 
 
-// =============Step 01: Calculate Total Payable & Vat=====================================================================================
+        // ===========Step 01: Calculate Total Payable & Vat=======
 
     let matchStage={$match:{userID:user_id}}
     let JoinStageProduct={$lookup:{from:"products",localField:"productID",foreignField:"_id",as:"product"}}
@@ -40,14 +40,14 @@ const CreateInvoiceService = async (req) => {
 
 
 
-// =============Step 02: Prepare  Customer Details & Shipping Details=====================================================================================
+    // =============Step 02: Prepare  Customer Details & Shipping Details=========
 
     let Profile=await ProfileModel.aggregate([matchStage]);
     let cus_details=`Name:${Profile[0]['cus_name']}, Email:${cus_email}, Address:${Profile[0]['cus_add']}, Phone:${Profile[0]['cus_phone']}`;
     let ship_details=`Name:${Profile[0]['ship_name']}, City:${Profile[0]['ship_city']}, Address:${Profile[0]['ship_add']}, Phone:${Profile[0]['ship_phone']}`;
 
 
-// =============Step 03: Transaction & Other's ID=====================================================================================
+        // =============Step 03: Transaction & Other's ID==============
 
     let tran_id=Math.floor(10000000+Math.random()*90000000);
     let val_id=0;
@@ -58,7 +58,7 @@ const CreateInvoiceService = async (req) => {
 
 
 
-// =============Step 04: Create Invoice=====================================================================================
+    // =============Step 04: Create Invoice============
 
     let createInvoice=await InvoiceModel.create({
         userID:user_id,
@@ -76,7 +76,7 @@ const CreateInvoiceService = async (req) => {
 
 
 
-// =============Step 05: Create Invoice Product=====================================================================================
+        // =============Step 05: Create Invoice Product=====
         let invoice_id=createInvoice['_id'];
 
         CartProducts.forEach(async (element)=>{
@@ -93,12 +93,12 @@ const CreateInvoiceService = async (req) => {
 
 
 
-//=============Step 06: Remove Carts=====================================================================================
+            //=============Step 06: Remove Carts====
         await  CartModel.deleteMany({userID:user_id});
 
 
 
-//=============Step 07: Prepare SSL Payment====================================================================================
+//=============Step 07: Prepare SSL Payment==========
 
     let PaymentSettings=await PaymentSettingModel.find();
 
@@ -146,8 +146,6 @@ const CreateInvoiceService = async (req) => {
 
 
 }
-
-
 
 
 const PaymentSuccessService = async (req)=>{

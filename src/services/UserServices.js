@@ -34,8 +34,6 @@ const VerifyOTPService = async (req) => {
         // User Count
         let total=await UserModel.find({email:email,otp:otp}).count('total');
         if(total===1){
-
-            // User ID Read
             let user_id=await UserModel.find({email:email,otp:otp}).select('_id');
 
             // User Token Create
@@ -59,8 +57,6 @@ const VerifyOTPService = async (req) => {
 }
 
 
-
-
 const SaveProfileService = async (req) => {
    try {
        let user_id=req.headers.user_id;
@@ -72,10 +68,6 @@ const SaveProfileService = async (req) => {
        return {status:"fail", message:"Something Went Wrong"}
    }
 }
-
-
-
-
 
 const ReadProfileService = async (req) => {
     try {

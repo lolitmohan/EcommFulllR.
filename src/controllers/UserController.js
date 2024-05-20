@@ -5,7 +5,6 @@ exports.UserOTP=async (req,res)=>{
     return res.status(200).json(result)
 }
 
-
 exports.VerifyLogin=async (req,res)=>{
     let result=await VerifyOTPService(req)
 
@@ -19,7 +18,7 @@ exports.VerifyLogin=async (req,res)=>{
         return res.status(200).json(result)
 
     }else {
-        return res.status(200).json(result)
+        return res.status(200).json(   )
     }
 }
 

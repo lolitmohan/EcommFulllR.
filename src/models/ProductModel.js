@@ -8,7 +8,7 @@ const DataSchema=mongoose.Schema({
         image:{type:String,required:true},
         star:{type:String,required:true},
         stock:{type:Boolean,required:true},
-        remark:{type:String,required:true},
+        remark:{type:String,required:true,enum:['new','trending','popular','top','special','regular']},
         categoryID:{type:mongoose.Schema.Types.ObjectId,required:true},
         brandID:{type:mongoose.Schema.Types.ObjectId,required:true}
     },
