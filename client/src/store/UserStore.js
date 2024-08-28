@@ -8,7 +8,7 @@ const UserStore=create((set)=>({
         return !!Cookies.get('token');
     },
 
-    LoginFormData:{email:""},
+    LoginFormData:{email:" "},
     LoginFormOnChange:(name,value)=>{
         set((state)=>({
             LoginFormData:{

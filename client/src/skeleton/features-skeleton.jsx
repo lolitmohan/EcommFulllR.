@@ -1,7 +1,7 @@
 import React from 'react';
 import Skeleton from "react-loading-skeleton";
 import Lottie from "lottie-react";
-import ImagePlaceholder from "../assets/images/image.json"
+import ImagePlaceholder from "../assets/images/image.json";
 
 const FeaturesSkeleton = () => {
     return (
@@ -18,7 +18,7 @@ const FeaturesSkeleton = () => {
                                               <Lottie className="w-100" animationData={ImagePlaceholder} loop={true} />
                                           </div>
                                           <div className="col-8">
-                                              <Skeleton count={3} />
+                                              <Skeleton count={5} />
                                           </div>
                                       </div>
                                   </div>
